@@ -22,13 +22,7 @@ describe('calculateShipping ', () => {
         expect(req.session.totalCartAmount).toBe(1000); // totalCartAmount no cambia
     });
 
-    // test('(1) Es una suscripción (envío gratuito) - fallo intencional', () => {
-    //     req.session.cartSubscription = true;
-
-    //     calculateShipping(400, config, req);
-
-    //     expect(req.session.shippingMessage).toBe('Free Shipping'); 
-    // });
+    
 
     
     test('(3) Monto mayor o igual al umbral de envío gratuito', () => {
