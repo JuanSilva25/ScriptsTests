@@ -12,7 +12,6 @@ describe('calculateShipping ', () => {
         };
     });
 
-    // Prueba que debería pasar
     test('(1) Es una suscripción (envío gratuito)', () => {
         req.session.cartSubscription = true;
 
@@ -23,17 +22,15 @@ describe('calculateShipping ', () => {
         expect(req.session.totalCartAmount).toBe(1000); // totalCartAmount no cambia
     });
 
-    // Prueba que debería fallar intencionalmente (mensaje incorrecto)
-    test('(1) Es una suscripción (envío gratuito) - fallo intencional', () => {
-        req.session.cartSubscription = true;
+    // test('(1) Es una suscripción (envío gratuito) - fallo intencional', () => {
+    //     req.session.cartSubscription = true;
 
-        calculateShipping(400, config, req);
+    //     calculateShipping(400, config, req);
 
-        // Provocamos un fallo esperando un mensaje incorrecto
-        expect(req.session.shippingMessage).toBe('Free Shipping'); // Debería ser 'FREE shipping'
-    });
+    //     expect(req.session.shippingMessage).toBe('Free Shipping'); 
+    // });
 
-    // Prueba que debería pasar
+    
     test('(3) Monto mayor o igual al umbral de envío gratuito', () => {
         req.session.cartSubscription = false;
 
@@ -44,7 +41,7 @@ describe('calculateShipping ', () => {
         expect(req.session.totalCartAmount).toBe(1000); // totalCartAmount no cambia
     });
 
-    // Prueba que debería pasar
+    
     test('(5) No hay país configurado (estimación de envío)', () => {
         req.session.cartSubscription = false;
         req.session.customerCountry = undefined;
@@ -56,17 +53,15 @@ describe('calculateShipping ', () => {
         expect(req.session.totalCartAmount).toBe(400 + config.domesticShippingAmount);
     });
 
-    // Prueba que debería fallar intencionalmente (totalCartShipping incorrecto)
-    test('(3) Monto mayor o igual al umbral de envío gratuito - fallo intencional', () => {
-        req.session.cartSubscription = false;
+    // test('(3) Monto mayor o igual al umbral de envío gratuito ', () => {
+    //     req.session.cartSubscription = false;
 
-        calculateShipping(600, config, req);
+    //     calculateShipping(600, config, req);
 
-        // Provocamos un fallo esperando un totalCartShipping incorrecto
-        expect(req.session.totalCartShipping).toBe(10); // Debería ser 0
-    });
 
-    // Prueba que debería pasar
+    //     expect(req.session.totalCartShipping).toBe(10); 
+    // });
+
     test('(6) Envío internacional (país diferente)', () => {
         req.session.cartSubscription = false;
         req.session.customerCountry = 'CA';
@@ -78,14 +73,12 @@ describe('calculateShipping ', () => {
         expect(req.session.totalCartAmount).toBe(400 + config.internationalShippingAmount);
     });
 
-    // Prueba que debería fallar intencionalmente (totalCartAmount incorrecto)
-    test('(6) Envío internacional (país diferente) - fallo intencional', () => {
-        req.session.cartSubscription = false;
-        req.session.customerCountry = 'CA';
+    // test('(6) Envío internacional (país diferente) ', () => {
+    //     req.session.cartSubscription = false;
+    //     req.session.customerCountry = 'CA';
 
-        calculateShipping(400, config, req);
+    //     calculateShipping(400, config, req);
 
-        // Provocamos un fallo esperando un totalCartAmount incorrecto
-        expect(req.session.totalCartAmount).toBe(500); // Debería ser 400 + config.internationalShippingAmount
-    });
+    //     expect(req.session.totalCartAmount).toBe(500); 
+    // });
 });
